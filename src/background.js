@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, electron } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -40,6 +40,8 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+
+
 }
 
 // Quit when all windows are closed.
@@ -88,6 +90,8 @@ if (isDevelopment) {
   }
 }
 
+
+
 function registerLocalResourceProtocol() {
   protocol.registerFileProtocol('local-resource', (request, callback) => {
     console.log(request.url)
@@ -102,3 +106,13 @@ function registerLocalResourceProtocol() {
     }
   })
 }
+
+ipcMain.handle('minimize', async () => {
+  BrowserWindow.getFocusedWindow().minimize()
+  return { success: true, event: 'minimize' }
+})
+
+ipcMain.handle('close', async () => {
+  BrowserWindow.getFocusedWindow().close()
+  return { success: true, event: 'close' }
+})

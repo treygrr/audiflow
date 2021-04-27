@@ -166,10 +166,14 @@ export default {
       this.playerVisibile = true
     },
     minimizeApp() {
-      this.$remote.getCurrentWindow().minimize()
+      this.$ipcRenderer.invoke('minimize').then((result) => {
+        console.log(result)
+      })
     },
     closeApp() {
-      this.$remote.getCurrentWindow().close()
+      this.$ipcRenderer.invoke('close').then((result) => {
+        console.log(result)
+      })
     },
     hidePlayer() {
       this.stopAnimations = false;
