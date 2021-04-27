@@ -4,11 +4,12 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import AudioVisual from 'vue-audio-visual'
+import { remote } from 'electron'
 
 Vue.use(AudioVisual)
 
 Vue.config.productionTip = false
-
+Vue.prototype.$remote = remote
 new Vue({
   router,
   store,

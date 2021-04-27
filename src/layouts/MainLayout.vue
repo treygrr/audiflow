@@ -1,15 +1,15 @@
 <template>
   <div class="home">
     <figure class="image-figure">
-      <img class="logo" src="../assets/audiflow.png">
+      <img class="logo">
     </figure>
     <div class="navbar">
       <div class="system-drag"></div>
       <div class="system-controls">
-        <v-btn x-small depressed tile color="transparent">
+        <v-btn x-small depressed tile color="transparent" @click="minimizeApp()">
           <v-icon color="white" height="10px" width="10px">mdi-minus</v-icon>
         </v-btn>
-        <v-btn x-small depressed tile color="transparent">
+        <v-btn x-small depressed tile color="transparent" @click="closeApp()">
           <v-icon color="white" height="10px" width="10px">mdi-close</v-icon>
         </v-btn>
       </div>
@@ -165,9 +165,11 @@ export default {
       this.file = 'C:\\finally_alone.mp3'
       this.playerVisibile = true
     },
-    minimize() {
+    minimizeApp() {
+      this.$remote.getCurrentWindow().minimize()
     },
     closeApp() {
+      this.$remote.getCurrentWindow().close()
     },
     hidePlayer() {
       this.stopAnimations = false;
