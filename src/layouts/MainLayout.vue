@@ -172,7 +172,11 @@ export default {
       })
     },
     selectDirs(){
-      this.$ipcRenderer.send('select-dirs')
+      this.$ipcRenderer.invoke('select-dirs').then((result) => {
+        console.log(result)
+        console.log(this.$store.get('filepaths'))
+      })
+
     },
     closeApp() {
       this.$ipcRenderer.invoke('close').then((result) => {

@@ -6,6 +6,10 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 
+import Store from 'electron-store'
+
+const store = new Store();
+
 
 let win;
 
@@ -117,9 +121,12 @@ ipcMain.handle('close', async () => {
   return { success: true, event: 'close' }
 })
 
-ipcMain.on('select-dirs', async () => {
+ipcMain.handle('select-dirs', async () => {
   const result = await dialog.showOpenDialog(win, {
     properties: ['openDirectory']
   })
-  console.log('directories selected', result.filePaths)
+  store.set('filepaths', result.filePaths[0]);
+  console.log('directories selected', result.filePaths[0])
+  return true
 })
+

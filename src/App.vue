@@ -35,3 +35,11 @@ html {
   
 }
 </style>
+
+<script>
+export default {
+  mounted() {
+    
+  }
+}
+</script>
