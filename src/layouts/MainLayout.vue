@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <figure class="image-figure">
-      <img class="logo">
+      <img class="logo" src="../assets/audiflow.png">
     </figure>
     <div class="navbar">
       <div class="system-drag"></div>
@@ -24,6 +24,7 @@
         <v-btn @click.native="setChill()">chill.mp3</v-btn>
         <v-btn @click.native="setAlone()">finally alone.mp3</v-btn>
         <v-btn v-if="file" @click.native="hidePlayer()">Toggle Player</v-btn>
+        <v-btn v-if="file" @click.native="selectDirs()">select dir</v-btn>
       </section>
     </div>
     <transition
@@ -169,6 +170,9 @@ export default {
       this.$ipcRenderer.invoke('minimize').then((result) => {
         console.log(result)
       })
+    },
+    selectDirs(){
+      this.$ipcRenderer.send('select-dirs')
     },
     closeApp() {
       this.$ipcRenderer.invoke('close').then((result) => {

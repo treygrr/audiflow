@@ -1,6 +1,5 @@
 <template>
-  <div class="about">
+  <div class="mainpage">
     <h1>This is a main page</h1>
-    <h1>This is a main page</h1><h1>This is a main page</h1><h1>This is a main page</h1><h1>This is a main page</h1><h1>This is a main page</h1><h1>This is a main page</h1><h1>This is a main page</h1><h1>This is a main page</h1>
   </div>
 </template>
