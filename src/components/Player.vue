@@ -40,7 +40,7 @@
                 </v-icon>
               </template>            
             </v-slider>
-            <div v-if="this.currentTime" class="timestamp-tracker">{{ convertToTimeStamp(this.currentTime) }} - {{ convertToTimeStamp(this.songDuration) }}</div>
+            <div class="timestamp-tracker">{{ convertToTimeStamp(this.currentTime) }} - {{ convertToTimeStamp(this.songDuration) }}</div>
           </div>
           <div class="player-controls">
               <v-btn color="white" class="button" icon>
