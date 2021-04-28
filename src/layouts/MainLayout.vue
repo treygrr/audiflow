@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" :style="background? 'background-image: url(\'local-resource://'+background+'\');':''">
     <figure class="image-figure">
       <img class="logo" src="../assets/audiflow.png">
     </figure>
@@ -15,6 +15,7 @@
       </div>
     </div>
     <div :class="`${this.playerVisible? 'page-wrapper-expanded':''} ${this.stopAnimations? 'no-transition':''} page-wrapper`">
+      <h1 v-if="background">{{ background }}</h1>
       <nav class="App__nav">
         <router-link to="/">Library</router-link> |
         <router-link to="/about">About</router-link>
@@ -107,7 +108,8 @@
   }
 
   .home {
-    background: url('../assets/space.jpg') center center;
+
+    background-color: lightseagreen;
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
@@ -143,6 +145,10 @@ export default {
     },
     stopAnimations: function() {
       return this.$store.state.playing.stopAnimations;
+    },
+    background: function() {
+      const str = this.$store.state.playing.background.replace(/(\\)/g,"\\\\");
+      return str
     }
   },
   created() {
