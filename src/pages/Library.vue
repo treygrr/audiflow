@@ -7,12 +7,17 @@
         <v-btn @click.native="selectDirs()">select dir</v-btn>
         <v-btn @click.native="setBackground()">setBackground</v-btn>
       </section>
+      <song-list></song-list>
   </div>
 </template>
 
 <script>
+import SongList from '../components/SongList'
 export default {
   name: 'Main',
+  components: {
+    SongList
+  },
   methods: {
     setChill() {
       this.$store.commit('playing/SET_CURRENT_SONG', 'C:\\chill.mp3');

@@ -8,6 +8,6 @@ export default function () {
     playerVisible: store.get('playerVisible') || true,
     stopAnimations: false,
     background: store.get('background') || '../src/assets/space.jpg',
-    musicDirs: []
+    musicDirs: store.get('musicDirs') || []
   }
 }
