@@ -16,7 +16,15 @@
     </template>
   </v-data-table>
 </template>
+<style>
+.v-application .elevation-1 {
+    box-shadow: unset !important;
+}
 
+.theme--dark.v-data-table {
+    background-color: unset !important;
+}
+</style>
 <script>
   export default {
     data () {
