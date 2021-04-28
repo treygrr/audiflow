@@ -133,3 +133,15 @@ ipcMain.handle('select-dirs', async () => {
   return false
 })
 
+ipcMain.handle('select-background', async ()  => {
+  const result = await dialog.showOpenDialog(win, {
+    properties: ['openFile']
+  })
+  if (result.filePaths[0]) {
+    store.set('filepaths', result);
+    console.log('directories selected', result)
+    return result.filePaths[0]
+  }
+  return false
+})
+

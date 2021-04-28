@@ -5,6 +5,7 @@
         <v-btn @click.native="setAlone()">finally alone.mp3</v-btn>
         <v-btn @click.native="togglePlayer()">Toggle Player</v-btn>
         <v-btn @click.native="selectDirs()">select dir</v-btn>
+        <v-btn @click.native="setBackground()">setBackground</v-btn>
       </section>
   </div>
 </template>
@@ -29,9 +30,13 @@ export default {
     selectDirs(){
       this.$ipcRenderer.invoke('select-dirs').then((result) => {
         console.log(result)
-        console.log(this.$store.get('filepaths'))
       })
-
+    },
+    setBackground(){
+      this.$ipcRenderer.invoke('select-background').then((result) => {
+        this.$store.commit('playing/SET_BACKGROUND', result)
+        console.log(result)
+      })
     },
     closeApp() {
       this.$ipcRenderer.invoke('close').then((result) => {

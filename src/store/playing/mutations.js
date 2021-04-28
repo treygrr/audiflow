@@ -16,3 +16,8 @@ export function TOGGLE_PLAYER_VISIBLE (state) {
 export function SET_ANIMATIONS (state, arg) {
     state.stopAnimations = arg
 }
+
+export function SET_BACKGROUND (state, arg) {
+    state.background = arg
+    store.set('background', arg)
+}

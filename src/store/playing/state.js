@@ -7,5 +7,6 @@ export default function () {
     currentSong: store.get('currentSong') || '',
     playerVisible: store.get('playerVisible') || true,
     stopAnimations: false,
+    background: store.get('background') || '../src/assets/space.jpg'
   }
 }
