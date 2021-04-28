@@ -14,25 +14,22 @@
         </v-btn>
       </div>
     </div>
-    <div :class="`${this.playerVisibile? 'page-wrapper-expanded':''} ${this.stopAnimations? 'no-transition':''} page-wrapper`">
+    <div :class="`${this.playerVisible? 'page-wrapper-expanded':''} ${this.stopAnimations? 'no-transition':''} page-wrapper`">
       <nav class="App__nav">
-        <router-link to="/">This is the home page</router-link> |
+        <router-link to="/">Library</router-link> |
         <router-link to="/about">About</router-link>
       </nav>
       <router-view />
-      <section class="mb-md-4">
-        <v-btn @click.native="setChill()">chill.mp3</v-btn>
-        <v-btn @click.native="setAlone()">finally alone.mp3</v-btn>
-        <v-btn v-if="file" @click.native="hidePlayer()">Toggle Player</v-btn>
-        <v-btn v-if="file" @click.native="selectDirs()">select dir</v-btn>
-      </section>
+     
     </div>
+
     <transition
       name="custom-classes-transition"
       enter-active-class="animated slideInUp"
       leave-active-class="animated bounceOutRight"
     >
-    <player :class="`${this.playerVisibile? 'audio-player-show':''} audio-player`" :src="file" />
+
+    <player :class="`${this.playerVisible? 'audio-player-show':''} audio-player`" />
   </transition>
   </div>
 </template>
@@ -45,7 +42,7 @@
   }
   .page-wrapper {
     transition: all .5s ease-in-out;
-    height: calc(100vh - 20px);
+    height: calc(100vh - px);
     background: rgba(0, 0, 0, 0.5);
     padding: 10px;
     position: relative;
@@ -54,7 +51,7 @@
 
   .page-wrapper-expanded {
     transition: all .5s ease-in-out;
-    height: calc(100vh - 118px);
+    height: calc(100vh - 112px);
     
   }
   .audio-player {
@@ -140,53 +137,30 @@ export default {
   components: {
     Player
   },
+  computed: {
+    playerVisible: function () {
+      return this.$store.state.playing.playerVisible;
+    },
+    stopAnimations: function() {
+      return this.$store.state.playing.stopAnimations;
+    }
+  },
   created() {
     // This stop the UI from slowly readjusting to a new window frame. Makes the UI look cleaner
     window.onresize = (e) =>{
       if (e) {
-        this.stopAnimations = true;
+        this.$store.commit('playing/SET_ANIMATIONS', true);
         return
       }
-      this.stopAnimations = false;
     };
   },
-  data: ()=>{
-    return {
-      file: null,
-      playerVisibile: false,
-      stopAnimations: false
-    }
-  },
   methods: {
-    setChill() {
-      this.file = 'C:\\chill.mp3';
-      this.playerVisibile = true
-    },
-    setAlone() {
-      this.file = 'C:\\finally_alone.mp3'
-      this.playerVisibile = true
-    },
     minimizeApp() {
-      this.$ipcRenderer.invoke('minimize').then((result) => {
-        console.log(result)
-      })
-    },
-    selectDirs(){
-      this.$ipcRenderer.invoke('select-dirs').then((result) => {
-        console.log(result)
-        console.log(this.$store.get('filepaths'))
-      })
-
+      this.$remote.getCurrentWindow().minimize()
     },
     closeApp() {
-      this.$ipcRenderer.invoke('close').then((result) => {
-        console.log(result)
-      })
+      this.$remote.getCurrentWindow().close()
     },
-    hidePlayer() {
-      this.stopAnimations = false;
-      this.playerVisibile = !this.playerVisibile
-    }
   }
 }
 </script>

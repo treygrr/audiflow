@@ -7,11 +7,12 @@
           <div class="player-info">
             <p>{{ src }}</p>
           </div>
-          <div class="pt-4 player-timer">
+          <div class="player-timer">
             <v-slider
               v-model="currentTime"
               :min="0"
-              :max="songDuration"
+              :max="songDuration||100"
+              :readonly="src? false: true"
               @mousedown="pause(); seek()"
               @mouseup="seek(); play()"
               thumb-color="#40c6ff"
@@ -21,6 +22,7 @@
             >
               <template v-slot:prepend>
                 <v-icon
+                  :disabled="src? false: true"
                   color="white"
                   @click="rewind"
                 >
@@ -30,6 +32,7 @@
 
               <template v-slot:append>
                 <v-icon
+                  :disabled="src? false: true"
                   color="white"
                   @click="fastforward"
                 >
@@ -37,7 +40,7 @@
                 </v-icon>
               </template>            
             </v-slider>
-            <div class="timestamp-tracker">{{ convertToTimeStamp(this.currentTime) }}</div>
+            <div v-if="this.currentTime" class="timestamp-tracker">{{ convertToTimeStamp(this.currentTime) }} - {{ convertToTimeStamp(this.songDuration) }}</div>
           </div>
           <div class="player-controls">
               <v-btn color="white" class="button" icon>
@@ -59,12 +62,14 @@
 </template>
 
 <style>
-#app > div > div > div.container.player-wrapper.audio-player-show.audio-player > div > div > div.pt-4.player-timer > div.v-input.theme--light.v-input__slider > div.v-input__control > div.v-messages.theme--light{
-  height: 0px;
-  min-height: 0px;
-}
-#app > div > div > div.container.player-wrapper.audio-player-show.audio-player > div > div > div.pt-4.player-timer > div.v-input.theme--light.v-input__slider > div.v-input__control > div.v-input__slot {
+.player-timer >  div > .v-input__control {
   margin-bottom: 0px;
+}
+.player-timer >  div > .v-input__control > .v-input__slot {
+  margin-bottom: 0px;
+}
+.player-timer >  div > .v-input__control > .v-messages {
+  display: none
 }
 </style>
 
@@ -97,7 +102,11 @@
     margin-left: auto;
     margin-right: auto;
     position: absolute;
-    top: 5px;
+    pointer-events: none;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: 500;
+    top: 0px;
     left: 0;
     right: 0;
   }
@@ -113,6 +122,7 @@
     justify-content: center;
   }
   .player-timer {
+    padding-top: 10px;
     background-color: transparent;
     width: calc(100% - 20px);
     margin-left: 10px;
@@ -121,6 +131,8 @@
     display: flex;
     order: -1;
     align-items: center;
+    align-content: center;
+    justify-content: center;
   }
   .player-info {
     background-color: transparent;
@@ -161,9 +173,12 @@
     order: 1;
     width: 25%;
   }
+  .timestamp-tracker {
+    top: 10px;
+  }
   .button {
-    width: 50px;
-    height: 50px;
+    width: 50px !important;
+    height: 50px !important;
   }
 }
 
@@ -177,18 +192,12 @@ window.ipcRenderer = ipcRenderer
 
 export default {
   name: 'AudioPlayer',
-  props: ['src'],
   computed: {
-    
+    src: function () {
+      return this.$store.state.playing.currentSong
+    }
   },
   watch: {
-    src: function(newVal, oldVal) {
-      console.log('src changed: ', newVal, ' | was: ', oldVal)
-      this.$refs.audio.load()
-      this.playing = null
-
-      this.loaded()
-    },
     audio: function(newVal, oldVal) {
      console.log('audio changed: ', newVal, ' | was: ', oldVal)
     }

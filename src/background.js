@@ -125,8 +125,11 @@ ipcMain.handle('select-dirs', async () => {
   const result = await dialog.showOpenDialog(win, {
     properties: ['openDirectory']
   })
-  store.set('filepaths', result.filePaths[0]);
-  console.log('directories selected', result.filePaths[0])
-  return true
+  if (result.filePaths[0]) {
+    store.set('filepaths', result.filePaths[0]);
+    console.log('directories selected', result.filePaths[0])
+    return true
+  }
+  return false
 })
 
