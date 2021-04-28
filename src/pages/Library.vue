@@ -29,6 +29,7 @@ export default {
     },
     selectDirs(){
       this.$ipcRenderer.invoke('select-dirs').then((result) => {
+        this.$store.commit('playing/ADD_MUSIC_DIR', result)
         console.log(result)
       })
     },

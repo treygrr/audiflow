@@ -21,3 +21,11 @@ export function SET_BACKGROUND (state, arg) {
     state.background = arg
     store.set('background', arg)
 }
+
+export function ADD_MUSIC_DIR (state, arg)  {
+    console.log('this the arg: ', arg, state.musicDirs)
+    let what = state.musicDirs
+    what.push(arg)
+    state.musicDirs = what
+    store.set('musicDir', what)
+}

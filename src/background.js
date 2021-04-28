@@ -128,7 +128,7 @@ ipcMain.handle('select-dirs', async () => {
   if (result.filePaths[0]) {
     store.set('filepaths', result.filePaths[0]);
     console.log('directories selected', result.filePaths[0])
-    return true
+    return result.filePaths[0]
   }
   return false
 })
