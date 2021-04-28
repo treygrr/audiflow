@@ -15,7 +15,6 @@
       </div>
     </div>
     <div :class="`${this.playerVisible? 'page-wrapper-expanded':''} ${this.stopAnimations? 'no-transition':''} page-wrapper`">
-      <h1 v-if="background">{{ background }}</h1>
       <nav class="App__nav">
         <router-link to="/">Library</router-link> |
         <router-link to="/about">About</router-link>
