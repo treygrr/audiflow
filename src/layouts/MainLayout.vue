@@ -42,7 +42,7 @@
   }
   .page-wrapper {
     transition: all .5s ease-in-out;
-    height: calc(100vh - px);
+    height: calc(100vh - 20px);
     background: rgba(0, 0, 0, 0.5);
     padding: 10px;
     position: relative;
